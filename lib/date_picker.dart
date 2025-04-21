@@ -203,6 +203,18 @@ class DatePicker {
                 showTitle: true,
                 titleHeight:
                     DateTimePickerTheme.Default.titleHeight ?? kToolbarHeight,
+                cancel: InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: cancelWidget ?? const SizedBox.shrink(),
+                ),
+                confirm: InkWell(
+                  onTap: () {
+                    Navigator.pop(context, _selectedDate);
+                  },
+                  child: confirmWidget ?? const SizedBox.shrink(),
+                ),
               ),
               looping: looping,
               onCancel: () {
@@ -211,6 +223,9 @@ class DatePicker {
               onConfirm: (date, selectedIndex) {
                 _selectedDate = date;
                 Navigator.pop(context, date);
+              },
+              onChange: (date, selectedIndex) {
+                _selectedDate = date;
               },
             ),
             const SizedBox(height: 10),
@@ -221,17 +236,13 @@ class DatePicker {
                   onTap: () {
                     Navigator.pop(context, _selectedDate);
                   },
-                  child: Expanded(
-                    child: confirmWidget ?? const SizedBox.shrink(),
-                  ),
+                  child: confirmWidget ?? const SizedBox.shrink(),
                 ),
                 InkWell(
                   onTap: () {
                     Navigator.pop(context);
                   },
-                  child: Expanded(
-                    child: cancelWidget ?? const SizedBox.shrink(),
-                  ),
+                  child: cancelWidget ?? const SizedBox.shrink(),
                 ),
               ],
             ),
