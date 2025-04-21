@@ -215,22 +215,21 @@ class DatePicker {
             ),
             const SizedBox(height: 10),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               spacing: 18,
               children: [
-                Expanded(
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.pop(context, _selectedDate);
-                    },
+                InkWell(
+                  onTap: () {
+                    Navigator.pop(context, _selectedDate);
+                  },
+                  child: Expanded(
                     child: confirmWidget ?? const SizedBox.shrink(),
                   ),
                 ),
-                Expanded(
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
+                InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Expanded(
                     child: cancelWidget ?? const SizedBox.shrink(),
                   ),
                 ),
