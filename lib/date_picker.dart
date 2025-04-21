@@ -211,25 +211,35 @@ class DatePicker {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                child: cancelWidget ??
-                    TextButton(
-                      style: TextButton.styleFrom(foregroundColor: textColor),
-                      child: Text(cancelText ?? "Cancel"),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: cancelWidget ??
+                      TextButton(
+                        style: TextButton.styleFrom(foregroundColor: textColor),
+                        child: Text(cancelText ?? "Cancel"),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                ),
               ),
               const SizedBox(width: 10),
               Expanded(
-                child: confirmWidget ??
-                    TextButton(
-                      style: TextButton.styleFrom(foregroundColor: textColor),
-                      child: Text(confirmText ?? "OK"),
-                      onPressed: () {
-                        Navigator.pop(context, _selectedDate);
-                      },
-                    ),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pop(context, _selectedDate);
+                  },
+                  child: confirmWidget ??
+                      TextButton(
+                        style: TextButton.styleFrom(foregroundColor: textColor),
+                        child: Text(confirmText ?? "OK"),
+                        onPressed: () {
+                          Navigator.pop(context, _selectedDate);
+                        },
+                      ),
+                ),
               ),
             ],
           )
