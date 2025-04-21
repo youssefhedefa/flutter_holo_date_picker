@@ -131,20 +131,22 @@ class DatePicker {
   }) {
     DateTime? _selectedDate = initialDate ?? DateTime.now().startOfDay();
     final List<Widget> listButtonActions = [
-      confirmWidget ?? TextButton(
-        style: TextButton.styleFrom(foregroundColor: textColor),
-        child: Text(confirmText ?? "OK"),
-        onPressed: () {
-          Navigator.pop(context, _selectedDate);
-        },
-      ),
-      cancelWidget ?? TextButton(
-        style: TextButton.styleFrom(foregroundColor: textColor),
-        child: Text(cancelText ?? "Cancel"),
-        onPressed: () {
-          Navigator.pop(context);
-        },
-      )
+      confirmWidget ??
+          TextButton(
+            style: TextButton.styleFrom(foregroundColor: textColor),
+            child: Text(confirmText ?? "OK"),
+            onPressed: () {
+              Navigator.pop(context, _selectedDate);
+            },
+          ),
+      cancelWidget ??
+          TextButton(
+            style: TextButton.styleFrom(foregroundColor: textColor),
+            child: Text(cancelText ?? "Cancel"),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          )
     ];
 
     // handle the range of datetime
@@ -207,6 +209,7 @@ class DatePicker {
                 Navigator.pop(context);
               },
               onConfirm: (date, selectedIndex) {
+                _selectedDate = date;
                 Navigator.pop(context, date);
               },
             ),
@@ -215,8 +218,22 @@ class DatePicker {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               spacing: 18,
               children: [
-                confirmWidget ?? const SizedBox.shrink(),
-                cancelWidget ?? const SizedBox.shrink(),
+                Expanded(
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pop(context, _selectedDate);
+                    },
+                    child: confirmWidget ?? const SizedBox.shrink(),
+                  ),
+                ),
+                Expanded(
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: cancelWidget ?? const SizedBox.shrink(),
+                  ),
+                ),
               ],
             ),
           ],
