@@ -126,17 +126,19 @@ class DatePicker {
     String? cancelText,
     bool looping = false,
     bool reverse = false,
+    Widget? confirmWidget,
+    Widget? cancelWidget,
   }) {
     DateTime? _selectedDate = initialDate ?? DateTime.now().startOfDay();
     final List<Widget> listButtonActions = [
-      TextButton(
+      confirmWidget ?? TextButton(
         style: TextButton.styleFrom(foregroundColor: textColor),
         child: Text(confirmText ?? "OK"),
         onPressed: () {
           Navigator.pop(context, _selectedDate);
         },
       ),
-      TextButton(
+      cancelWidget ?? TextButton(
         style: TextButton.styleFrom(foregroundColor: textColor),
         child: Text(cancelText ?? "Cancel"),
         onPressed: () {
@@ -166,34 +168,60 @@ class DatePicker {
     if (textColor == null)
       textColor = DateTimePickerTheme.Default.itemTextStyle.color;
 
-    var datePickerDialog = AlertDialog(
-      title: Text(
-        titleText ?? "Select Date",
-        style: TextStyle(color: textColor),
-      ),
-      contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 14),
+    var datePickerDialog = Dialog(
       backgroundColor: backgroundColor,
-      content: Container(
-        width: 300,
-        child: DatePickerWidget(
-          firstDate: firstDate,
-          lastDate: lastDate,
-          initialDate: initialDate,
-          dateFormat: dateFormat,
-          locale: locale,
-          pickerTheme: DateTimePickerTheme(
-            backgroundColor: backgroundColor,
-            itemTextStyle: itemTextStyle ?? TextStyle(color: textColor),
-          ),
-          onChange: ((DateTime date, list) {
-            print(date);
-            _selectedDate = date;
-          }),
-          looping: looping,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(18.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              titleText ?? "Select Date",
+              style: TextStyle(
+                color: textColor,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            DatePickerWidget(
+              firstDate: firstDate,
+              lastDate: lastDate,
+              initialDate: initialDate,
+              dateFormat: dateFormat,
+              locale: locale,
+              pickerTheme: DateTimePickerTheme(
+                backgroundColor: backgroundColor,
+                itemTextStyle: itemTextStyle ??
+                    DateTimePickerTheme.Default.itemTextStyle.copyWith(
+                      color: textColor,
+                    ),
+                showTitle: true,
+                titleHeight:
+                    DateTimePickerTheme.Default.titleHeight ?? kToolbarHeight,
+              ),
+              looping: looping,
+              onCancel: () {
+                Navigator.pop(context);
+              },
+              onConfirm: (date, selectedIndex) {
+                Navigator.pop(context, date);
+              },
+            ),
+            const SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              spacing: 18,
+              children: [
+                confirmWidget ?? const SizedBox.shrink(),
+                cancelWidget ?? const SizedBox.shrink(),
+              ],
+            ),
+          ],
         ),
       ),
-      actions:
-          reverse ? listButtonActions.reversed.toList() : listButtonActions,
     );
     return showDialog(
         useRootNavigator: false,
