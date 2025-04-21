@@ -40,36 +40,32 @@ class MyHomePage extends StatelessWidget {
                 dateFormat: "dd-MMMM-yyyy",
                 locale: DateTimePickerLocale.en_us,
                 looping: true,
-                cancelWidget: Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      border: Border.all(
-                        color: Colors.red,
-                        width: 1,
-                      ),
-                    ),
-                    child: const Text(
-                      "Cancel",
-                      style: TextStyle(color: Colors.red),
+                cancelWidget: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(
+                      color: Colors.red,
+                      width: 1,
                     ),
                   ),
+                  child: const Text(
+                    "Cancel",
+                    style: TextStyle(color: Colors.red),
+                  ),
                 ),
-                confirmWidget: Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      border: Border.all(
-                        color: Colors.green,
-                        width: 1,
-                      ),
+                confirmWidget: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(
+                      color: Colors.green,
+                      width: 1,
                     ),
-                    padding: const EdgeInsets.all(10),
-                    child: const Text(
-                      "Confirm",
-                      style: TextStyle(color: Colors.green),
-                    ),
+                  ),
+                  padding: const EdgeInsets.all(10),
+                  child: const Text(
+                    "Confirm",
+                    style: TextStyle(color: Colors.green),
                   ),
                 ),
               );

@@ -171,20 +171,17 @@ class DatePicker {
       textColor = DateTimePickerTheme.Default.itemTextStyle.color;
 
     var datePickerDialog = AlertDialog(
-      // title: Text(
-      //   titleText ?? "Select Date",
-      //   style: TextStyle(color: textColor),
-      // ),
-      contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 14),
+      contentPadding: EdgeInsets.all(18),
       backgroundColor: backgroundColor,
       content: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Container(
             padding: const EdgeInsets.only(top: 10, bottom: 10),
             alignment: Alignment.center,
             child: Text(
               titleText ?? "Select Date",
-              style: TextStyle(color: textColor),
+              style: itemTextStyle,
             ),
           ),
           Container(
@@ -208,7 +205,6 @@ class DatePicker {
           ),
           const SizedBox(height: 10),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
                 child: InkWell(
@@ -242,7 +238,7 @@ class DatePicker {
                 ),
               ),
             ],
-          )
+          ),
         ],
       ),
       // actions:
