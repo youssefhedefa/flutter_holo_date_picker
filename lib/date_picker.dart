@@ -170,25 +170,26 @@ class DatePicker {
     if (textColor == null)
       textColor = DateTimePickerTheme.Default.itemTextStyle.color;
 
-    var datePickerDialog = Dialog(
+    var datePickerDialog = AlertDialog(
+      // title: Text(
+      //   titleText ?? "Select Date",
+      //   style: TextStyle(color: textColor),
+      // ),
+      contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 14),
       backgroundColor: backgroundColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(18.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
+      content: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.only(top: 10, bottom: 10),
+            alignment: Alignment.center,
+            child: Text(
               titleText ?? "Select Date",
-              style: TextStyle(
-                color: textColor,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(color: textColor),
             ),
-            DatePickerWidget(
+          ),
+          Container(
+            width: 300,
+            child: DatePickerWidget(
               firstDate: firstDate,
               lastDate: lastDate,
               initialDate: initialDate,
@@ -196,59 +197,46 @@ class DatePicker {
               locale: locale,
               pickerTheme: DateTimePickerTheme(
                 backgroundColor: backgroundColor,
-                itemTextStyle: itemTextStyle ??
-                    DateTimePickerTheme.Default.itemTextStyle.copyWith(
-                      color: textColor,
-                    ),
-                showTitle: true,
-                titleHeight:
-                    DateTimePickerTheme.Default.titleHeight ?? kToolbarHeight,
-                cancel: InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: cancelWidget ?? const SizedBox.shrink(),
-                ),
-                confirm: InkWell(
-                  onTap: () {
-                    Navigator.pop(context, _selectedDate);
-                  },
-                  child: confirmWidget ?? const SizedBox.shrink(),
-                ),
+                itemTextStyle: itemTextStyle ?? TextStyle(color: textColor),
               ),
+              onChange: ((DateTime date, list) {
+                print(date);
+                _selectedDate = date;
+              }),
               looping: looping,
-              onCancel: () {
-                Navigator.pop(context);
-              },
-              onConfirm: (date, selectedIndex) {
-                _selectedDate = date;
-                Navigator.pop(context, date);
-              },
-              onChange: (date, selectedIndex) {
-                _selectedDate = date;
-              },
             ),
-            const SizedBox(height: 10),
-            Row(
-              spacing: 18,
-              children: [
-                InkWell(
-                  onTap: () {
-                    Navigator.pop(context, _selectedDate);
-                  },
-                  child: confirmWidget ?? const SizedBox.shrink(),
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: cancelWidget ?? const SizedBox.shrink(),
-                ),
-              ],
-            ),
-          ],
-        ),
+          ),
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: cancelWidget ??
+                    TextButton(
+                      style: TextButton.styleFrom(foregroundColor: textColor),
+                      child: Text(cancelText ?? "Cancel"),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: confirmWidget ??
+                    TextButton(
+                      style: TextButton.styleFrom(foregroundColor: textColor),
+                      child: Text(confirmText ?? "OK"),
+                      onPressed: () {
+                        Navigator.pop(context, _selectedDate);
+                      },
+                    ),
+              ),
+            ],
+          )
+        ],
       ),
+      // actions:
+      //     reverse ? listButtonActions.reversed.toList() : listButtonActions,
     );
     return showDialog(
         useRootNavigator: false,
